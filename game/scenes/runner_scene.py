@@ -16,11 +16,11 @@ class RunnerScene:
         self.player_speed = 7
 
         self.obstacles = []
-        self.obstacle_width = 60
-        self.obstacle_height = 60
+        self.obstacle_width = 80
+        self.obstacle_height = 80
         self.spawn_interval = 45
         self.spawn_counter = 0
-        self.speed = 10
+        self.speed = 25
         self.score = 0
 
         self.game_over = False
