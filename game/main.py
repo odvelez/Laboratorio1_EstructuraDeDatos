@@ -1,10 +1,13 @@
 import pygame
 
+import save_system
 from scenes.menu import MenuScene
 
 
 def main():
     pygame.init()
+
+    save_system.cargar_progreso()
 
     width, height = 800, 600
     screen = pygame.display.set_mode((width, height))

@@ -1,5 +1,9 @@
 import random
+
 import pygame
+
+import config
+import save_system
 
 
 class RunnerScene:
@@ -7,28 +11,34 @@ class RunnerScene:
         self.next_scene = None
         self.should_quit = False
 
+        cfg = config.config_dificultad[config.dificultad_actual]
+
         self.width = 800
         self.height = 600
         self.player_width = 60
         self.player_height = 20
         self.player_x = (self.width - self.player_width) // 2
         self.player_y = self.height - 60
-        self.player_speed = 7
+        self.player_speed = cfg["velocidad_juego"]
 
         self.obstacles = []
         self.obstacle_width = 40
         self.obstacle_height = 40
-        self.spawn_interval = 45
+        self.spawn_interval = cfg["spawn_obstaculos"]
         self.spawn_counter = 0
-        self.speed = 5
+        self.speed = cfg["velocidad_obstaculos"]
         self.score = 0
+        self.distance = 0
 
+        self.pausado = False
         self.game_over = False
         self.game_over_counter = 0
         self.game_over_wait_frames = 120
 
         self.title_font = pygame.font.Font(None, 64)
         self.info_font = pygame.font.Font(None, 36)
+        self.pause_font = pygame.font.Font(None, 80)
+        self.diff_label = config.dificultad_actual.upper()
 
     def handle_events(self, events):
         for event in events:
@@ -36,7 +46,16 @@ class RunnerScene:
                 self.should_quit = True
                 return
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p and not self.game_over:
+                    self.pausado = not self.pausado
+                elif event.key == pygame.K_ESCAPE and not self.game_over:
+                    self._guardar_y_salir()
+
     def update(self):
+        if self.pausado:
+            return
+
         if self.game_over:
             self.game_over_counter += 1
             if self.game_over_counter >= self.game_over_wait_frames:
@@ -66,11 +85,14 @@ class RunnerScene:
 
         self.obstacles = [obs for obs in self.obstacles if obs.y < self.height + self.obstacle_height]
         self.score += 1
+        self.distance += self.speed
 
         player_rect = pygame.Rect(self.player_x, self.player_y, self.player_width, self.player_height)
         for obstacle in self.obstacles:
             if player_rect.colliderect(obstacle):
                 self.game_over = True
+                self._actualizar_game_state()
+                save_system.guardar_progreso()
                 break
 
     def draw(self, screen):
@@ -85,10 +107,40 @@ class RunnerScene:
         score_text = self.info_font.render(f"SCORE: {self.score}", True, (230, 230, 230))
         screen.blit(score_text, (20, 20))
 
+        diff_text = self.info_font.render(f"DIFF: {self.diff_label}", True, (180, 180, 180))
+        screen.blit(diff_text, (screen.get_width() - diff_text.get_width() - 20, 20))
+
+        if self.pausado:
+            overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 140))
+            screen.blit(overlay, (0, 0))
+
+            pause_text = self.pause_font.render("PAUSA", True, (255, 220, 0))
+            hint_text = self.info_font.render("Press P to resume", True, (210, 210, 210))
+            screen.blit(pause_text, pause_text.get_rect(center=(self.width // 2, self.height // 2 - 20)))
+            screen.blit(hint_text, hint_text.get_rect(center=(self.width // 2, self.height // 2 + 30)))
+
         if self.game_over:
             game_over_text = self.title_font.render("GAME OVER", True, (255, 255, 255))
-            restart_text = self.info_font.render("Returning to menu...", True, (235, 235, 235))
-            go_rect = game_over_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2 - 20))
-            rt_rect = restart_text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2 + 30))
+            score_final = self.info_font.render(f"Final Score: {self.score}", True, (235, 235, 235))
+            restart_text = self.info_font.render("Returning to menu...", True, (200, 200, 200))
+            go_rect = game_over_text.get_rect(center=(self.width // 2, self.height // 2 - 40))
+            sf_rect = score_final.get_rect(center=(self.width // 2, self.height // 2 + 10))
+            rt_rect = restart_text.get_rect(center=(self.width // 2, self.height // 2 + 50))
             screen.blit(game_over_text, go_rect)
+            screen.blit(score_final, sf_rect)
             screen.blit(restart_text, rt_rect)
+
+    def _actualizar_game_state(self):
+        save_system.game_state["puntaje"] = self.score
+        save_system.game_state["distancia"] = self.distance
+        save_system.game_state["dificultad"] = config.dificultad_actual
+        save_system.game_state["velocidad_juego"] = self.player_speed
+        save_system.game_state["nivel"] = save_system.game_state.get("nivel", 1)
+
+    def _guardar_y_salir(self):
+        self._actualizar_game_state()
+        save_system.guardar_progreso()
+        from scenes.menu import MenuScene
+
+        self.next_scene = MenuScene()

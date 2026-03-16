@@ -1,17 +1,18 @@
 import pygame
 
+import config
+
 
 class SettingsScene:
     def __init__(self):
         self.next_scene = None
         self.should_quit = False
 
-        self.options = ["VOLUME", "DIFFICULTY", "FULLSCREEN", "BACK"]
+        self.options = ["DIFFICULTY", "VOLUME", "FULLSCREEN", "BACK"]
         self.selected_index = 0
 
         self.volume = 5
-        self.difficulty_levels = ["EASY", "NORMAL", "HARD"]
-        self.difficulty_index = 1
+        self.indice_dificultad = config.dificultades.index(config.dificultad_actual)
         self.fullscreen = False
 
         self.title_font = pygame.font.Font(None, 60)
@@ -39,10 +40,11 @@ class SettingsScene:
     def _apply_option_action(self):
         option = self.options[self.selected_index]
 
-        if option == "VOLUME":
+        if option == "DIFFICULTY":
+            self.indice_dificultad = (self.indice_dificultad + 1) % len(config.dificultades)
+            config.dificultad_actual = config.dificultades[self.indice_dificultad]
+        elif option == "VOLUME":
             self.volume = (self.volume + 1) % 11
-        elif option == "DIFFICULTY":
-            self.difficulty_index = (self.difficulty_index + 1) % len(self.difficulty_levels)
         elif option == "FULLSCREEN":
             self.fullscreen = not self.fullscreen
         elif option == "BACK":
@@ -60,8 +62,8 @@ class SettingsScene:
         screen.blit(title, title.get_rect(center=(screen.get_width() // 2, 90)))
 
         rendered_options = [
+            f"DIFFICULTY: {config.dificultad_actual.upper()}",
             f"VOLUME: {self.volume}",
-            f"DIFFICULTY: {self.difficulty_levels[self.difficulty_index]}",
             f"FULLSCREEN: {'ON' if self.fullscreen else 'OFF'}",
             "BACK",
         ]
