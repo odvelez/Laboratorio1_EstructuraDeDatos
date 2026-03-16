@@ -70,6 +70,11 @@ class RunnerScene:
         if keys[pygame.K_RIGHT]:
             self.player_x += self.player_speed
 
+        mouse_buttons = pygame.mouse.get_pressed()
+        if mouse_buttons[0]:
+            mouse_x = pygame.mouse.get_pos()[0]
+            self.player_x = mouse_x - self.player_width // 2
+
         self.player_x = max(0, min(self.player_x, self.width - self.player_width))
 
         self.spawn_counter += 1

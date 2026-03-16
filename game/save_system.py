@@ -21,8 +21,14 @@ def cargar_progreso():
     if not os.path.exists(SAVE_FILE):
         return
 
-    with open(SAVE_FILE, "r", encoding="utf-8") as f:
-        datos = json.load(f)
+    try:
+        with open(SAVE_FILE, "r", encoding="utf-8") as f:
+            datos = json.load(f)
+    except (json.JSONDecodeError, ValueError):
+        return
+
+    if not isinstance(datos, dict):
+        return
 
     for clave in game_state:
         if clave in datos:

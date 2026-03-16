@@ -18,8 +18,16 @@ class SettingsScene:
         self.title_font = pygame.font.Font(None, 60)
         self.option_font = pygame.font.Font(None, 38)
         self.info_font = pygame.font.Font(None, 28)
+        self.option_rects = []
 
     def handle_events(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+
+        for rect_index, rect in enumerate(self.option_rects):
+            if rect.collidepoint(mouse_pos):
+                self.selected_index = rect_index
+                break
+
         for event in events:
             if event.type == pygame.QUIT:
                 self.should_quit = True
@@ -36,6 +44,13 @@ class SettingsScene:
                     from scenes.menu import MenuScene
 
                     self.next_scene = MenuScene()
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                for rect_index, rect in enumerate(self.option_rects):
+                    if rect.collidepoint(mouse_pos):
+                        self.selected_index = rect_index
+                        self._apply_option_action()
+                        break
 
     def _apply_option_action(self):
         option = self.options[self.selected_index]
@@ -68,13 +83,15 @@ class SettingsScene:
             "BACK",
         ]
 
+        self.option_rects.clear()
         start_y = 200
         spacing = 55
         for index, text in enumerate(rendered_options):
             color = (255, 220, 0) if index == self.selected_index else (225, 225, 225)
             line = self.option_font.render(text, True, color)
             line_rect = line.get_rect(center=(screen.get_width() // 2, start_y + index * spacing))
+            self.option_rects.append(line_rect)
             screen.blit(line, line_rect)
 
-        hint = self.info_font.render("ENTER to modify, ESC to return", True, (210, 210, 210))
+        hint = self.info_font.render("ENTER/CLICK to modify, ESC to return", True, (210, 210, 210))
         screen.blit(hint, hint.get_rect(center=(screen.get_width() // 2, screen.get_height() - 35)))
