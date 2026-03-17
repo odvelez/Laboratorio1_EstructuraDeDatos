@@ -26,7 +26,7 @@ class RunnerScene:
         self.obstacle_height = 40
         self.spawn_interval = cfg["spawn_obstaculos"]
         self.spawn_counter = 0
-        self.speed = cfg["velocidad_obstaculos"]
+        self.speed = 5
         self.score = 0
         self.distance = 0
 
