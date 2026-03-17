@@ -1,7 +1,21 @@
 {
-    "puntaje": 129,
-    "distancia": 387,
-    "dificultad": "facil",
-    "velocidad_juego": 4,
-    "nivel": 1
+    "players": {
+        "pepito": {
+            "maxScore": 463,
+            "attempts": [
+                {
+                    "score": 463,
+                    "fecha": "2026-03-17 11:37:21",
+                    "dificultad": "medio"
+                }
+            ],
+            "rankings": {
+                "facil": [],
+                "medio": [
+                    463
+                ],
+                "dificil": []
+            }
+        }
+    }
 }

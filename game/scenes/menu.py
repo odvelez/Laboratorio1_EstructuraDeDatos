@@ -1,15 +1,18 @@
 import pygame
 import sys
 
+import player
+
 
 class MenuScene:
     def __init__(self):
-        self.options = ["START GAME", "LEADERBOARD", "SETTINGS", "EXIT"]
+        self.options = ["START GAME", "LEADERBOARD", "SETTINGS", "LOG OUT", "EXIT"]
         self.selected_index = 0
         self.next_scene = None
         self.should_quit = False
         self.title_font = pygame.font.Font(None, 64)
         self.option_font = pygame.font.Font(None, 40)
+        self.info_font = pygame.font.Font(None, 28)
         self.option_rects = []
 
     def handle_events(self, events):
@@ -55,6 +58,11 @@ class MenuScene:
             from scenes.settings import SettingsScene
 
             self.next_scene = SettingsScene()
+        elif option == "LOG OUT":
+            from scenes.login import LoginScene
+
+            player.jugador_actual = None
+            self.next_scene = LoginScene()
         elif option == "EXIT":
             self.should_quit = True
             pygame.quit()
@@ -65,17 +73,26 @@ class MenuScene:
 
     def draw(self, screen):
         screen.fill((20, 20, 20))
+        cx = screen.get_width() // 2
 
         title_text = self.title_font.render("MAIN MENU", True, (255, 255, 255))
-        title_rect = title_text.get_rect(center=(screen.get_width() // 2, 110))
-        screen.blit(title_text, title_rect)
+        screen.blit(title_text, title_text.get_rect(center=(cx, 90)))
+
+        jugador = player.jugador_actual
+        if jugador:
+            info = self.info_font.render(
+                f"Player: {jugador.get_nombre()}  |  Best: {jugador.get_max_score()}",
+                True,
+                (160, 220, 160),
+            )
+            screen.blit(info, info.get_rect(center=(cx, 145)))
 
         self.option_rects.clear()
-        start_y = 220
-        spacing = 55
+        start_y = 200
+        spacing = 50
         for index, option in enumerate(self.options):
             color = (255, 220, 0) if index == self.selected_index else (210, 210, 210)
             option_text = self.option_font.render(option, True, color)
-            option_rect = option_text.get_rect(center=(screen.get_width() // 2, start_y + index * spacing))
+            option_rect = option_text.get_rect(center=(cx, start_y + index * spacing))
             self.option_rects.append(option_rect)
             screen.blit(option_text, option_rect)

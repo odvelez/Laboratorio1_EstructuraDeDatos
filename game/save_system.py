@@ -3,33 +3,29 @@ import os
 
 SAVE_FILE = os.path.join(os.path.dirname(__file__), "savegame.json")
 
-game_state = {
-    "puntaje": 0,
-    "distancia": 0,
-    "dificultad": "medio",
-    "velocidad_juego": 6,
-    "nivel": 1,
-}
+_ESTRUCTURA_BASE = {"players": {}}
 
 
-def guardar_progreso():
-    with open(SAVE_FILE, "w", encoding="utf-8") as f:
-        json.dump(game_state, f, indent=4, ensure_ascii=False)
-
-
-def cargar_progreso():
+def cargar_datos():
     if not os.path.exists(SAVE_FILE):
-        return
+        return _copiar_estructura()
 
     try:
         with open(SAVE_FILE, "r", encoding="utf-8") as f:
             datos = json.load(f)
-    except (json.JSONDecodeError, ValueError):
-        return
+    except (json.JSONDecodeError, ValueError, OSError):
+        return _copiar_estructura()
 
-    if not isinstance(datos, dict):
-        return
+    if not isinstance(datos, dict) or "players" not in datos:
+        return _copiar_estructura()
 
-    for clave in game_state:
-        if clave in datos:
-            game_state[clave] = datos[clave]
+    return datos
+
+
+def guardar_datos(datos):
+    with open(SAVE_FILE, "w", encoding="utf-8") as f:
+        json.dump(datos, f, indent=4, ensure_ascii=False)
+
+
+def _copiar_estructura():
+    return json.loads(json.dumps(_ESTRUCTURA_BASE))

@@ -5,21 +5,18 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import pygame
 
-import save_system
-from scenes.menu import MenuScene
+from scenes.login import LoginScene
 
 
 def main():
     pygame.init()
-
-    save_system.cargar_progreso()
 
     width, height = 800, 600
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Laboratorio 1 - Escenas")
     clock = pygame.time.Clock()
 
-    current_scene = MenuScene()
+    current_scene = LoginScene()
     running = True
 
     while running:

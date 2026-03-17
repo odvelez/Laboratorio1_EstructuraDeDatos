@@ -3,7 +3,7 @@ import random
 import pygame
 
 import config
-import save_system
+import player
 
 
 class RunnerScene:
@@ -26,14 +26,14 @@ class RunnerScene:
         self.obstacle_height = 40
         self.spawn_interval = cfg["spawn_obstaculos"]
         self.spawn_counter = 0
-        self.speed = 5
+        self.speed = cfg["velocidad_obstaculos"]
         self.score = 0
-        self.distance = 0
 
         self.pausado = False
         self.game_over = False
         self.game_over_counter = 0
         self.game_over_wait_frames = 120
+        self.score_saved = False
 
         self.title_font = pygame.font.Font(None, 64)
         self.info_font = pygame.font.Font(None, 36)
@@ -90,14 +90,12 @@ class RunnerScene:
 
         self.obstacles = [obs for obs in self.obstacles if obs.y < self.height + self.obstacle_height]
         self.score += 1
-        self.distance += self.speed
 
         player_rect = pygame.Rect(self.player_x, self.player_y, self.player_width, self.player_height)
         for obstacle in self.obstacles:
             if player_rect.colliderect(obstacle):
                 self.game_over = True
-                self._actualizar_game_state()
-                save_system.guardar_progreso()
+                self._registrar_score()
                 break
 
     def draw(self, screen):
@@ -114,6 +112,11 @@ class RunnerScene:
 
         diff_text = self.info_font.render(f"DIFF: {self.diff_label}", True, (180, 180, 180))
         screen.blit(diff_text, (screen.get_width() - diff_text.get_width() - 20, 20))
+
+        jugador = player.jugador_actual
+        if jugador:
+            name_text = self.info_font.render(jugador.get_nombre(), True, (140, 200, 140))
+            screen.blit(name_text, (20, 55))
 
         if self.pausado:
             overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -136,16 +139,16 @@ class RunnerScene:
             screen.blit(score_final, sf_rect)
             screen.blit(restart_text, rt_rect)
 
-    def _actualizar_game_state(self):
-        save_system.game_state["puntaje"] = self.score
-        save_system.game_state["distancia"] = self.distance
-        save_system.game_state["dificultad"] = config.dificultad_actual
-        save_system.game_state["velocidad_juego"] = self.player_speed
-        save_system.game_state["nivel"] = save_system.game_state.get("nivel", 1)
+    def _registrar_score(self):
+        if self.score_saved:
+            return
+        self.score_saved = True
+
+        mgr = player.get_manager()
+        mgr.registrar_intento(self.score, config.dificultad_actual)
 
     def _guardar_y_salir(self):
-        self._actualizar_game_state()
-        save_system.guardar_progreso()
+        self._registrar_score()
         from scenes.menu import MenuScene
 
         self.next_scene = MenuScene()
