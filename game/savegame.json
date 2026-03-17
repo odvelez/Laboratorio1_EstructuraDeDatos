@@ -16,6 +16,116 @@
                 ],
                 "dificil": []
             }
+        },
+        "oscar": {
+            "maxScore": 228,
+            "attempts": [
+                {
+                    "score": 165,
+                    "fecha": "2026-03-17 12:08:48",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 75,
+                    "fecha": "2026-03-17 12:08:52",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-17 12:08:56",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 75,
+                    "fecha": "2026-03-17 12:09:04",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 180,
+                    "fecha": "2026-03-17 12:09:09",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 45,
+                    "fecha": "2026-03-17 12:09:13",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 75,
+                    "fecha": "2026-03-17 12:09:17",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 45,
+                    "fecha": "2026-03-17 12:09:20",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 75,
+                    "fecha": "2026-03-17 12:09:24",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 45,
+                    "fecha": "2026-03-17 12:09:28",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 90,
+                    "fecha": "2026-03-17 12:09:32",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 135,
+                    "fecha": "2026-03-17 12:09:36",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 135,
+                    "fecha": "2026-03-17 12:09:41",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 120,
+                    "fecha": "2026-03-17 12:09:45",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-17 12:09:54",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-17 12:09:58",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 228,
+                    "fecha": "2026-03-17 12:10:04",
+                    "dificultad": "medio"
+                }
+            ],
+            "rankings": {
+                "facil": [],
+                "medio": [
+                    228,
+                    138,
+                    48
+                ],
+                "dificil": [
+                    180,
+                    165,
+                    135,
+                    135,
+                    120,
+                    90,
+                    75,
+                    75,
+                    75,
+                    75
+                ]
+            }
         }
     }
 }
