@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import save_system
+from crud import save_system
 
 jugador_actual = None
 

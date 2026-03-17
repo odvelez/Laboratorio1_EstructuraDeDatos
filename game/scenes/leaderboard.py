@@ -1,7 +1,7 @@
 import pygame
 
 import config
-import ranking
+from crud import ranking
 
 
 DIFICULTADES = ["facil", "medio", "dificil"]

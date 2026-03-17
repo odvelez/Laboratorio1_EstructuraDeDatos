@@ -1,7 +1,7 @@
 import json
 import os
 
-SAVE_FILE = os.path.join(os.path.dirname(__file__), "savegame.json")
+SAVE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "savegame.json")
 
 _ESTRUCTURA_BASE = {"players": {}}
 

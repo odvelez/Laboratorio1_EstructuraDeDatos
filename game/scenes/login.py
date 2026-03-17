@@ -1,6 +1,6 @@
 import pygame
 
-import player
+from crud import player
 
 
 class LoginScene:

@@ -3,7 +3,7 @@ import random
 import pygame
 
 import config
-import player
+from crud import player
 
 
 class RunnerScene:

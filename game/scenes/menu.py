@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-import player
+from crud import player
 
 
 class MenuScene:
