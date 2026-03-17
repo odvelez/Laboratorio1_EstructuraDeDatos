@@ -2,19 +2,19 @@ dificultades = ["facil", "medio", "dificil"]
 
 config_dificultad = {
     "facil": {
-        "velocidad_juego": 4,
-        "spawn_obstaculos": 60,
-        "velocidad_obstaculos": 3,
+        "velocidad_juego": 20,
+        "spawn_obstaculos": 40,
+        "velocidad_obstaculos": 15,
     },
     "medio": {
-        "velocidad_juego": 6,
-        "spawn_obstaculos": 45,
-        "velocidad_obstaculos": 5,
+        "velocidad_juego": 15,
+        "spawn_obstaculos": 30,
+        "velocidad_obstaculos":30,
     },
     "dificil": {
-        "velocidad_juego": 8,
-        "spawn_obstaculos": 28,
-        "velocidad_obstaculos": 7,
+        "velocidad_juego":10,
+        "spawn_obstaculos": 15,
+        "velocidad_obstaculos": 36,
     },
 }
 
