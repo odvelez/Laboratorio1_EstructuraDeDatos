@@ -18,7 +18,7 @@ def main():
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Laboratorio 1 - Escenas")
     clock = pygame.time.Clock()
-
+    "hola"
     current_scene = MenuScene()
     running = True
 
