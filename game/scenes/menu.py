@@ -73,10 +73,12 @@ class MenuScene:
 
     def draw(self, screen):
         screen.fill((20, 20, 20))
-        cx = screen.get_width() // 2
+        w, h = screen.get_size()
+        cx = w // 2
+        cy = h // 2
 
         title_text = self.title_font.render("MAIN MENU", True, (255, 255, 255))
-        screen.blit(title_text, title_text.get_rect(center=(cx, 90)))
+        screen.blit(title_text, title_text.get_rect(center=(cx, cy - 170)))
 
         jugador = player.jugador_actual
         if jugador:
@@ -85,11 +87,12 @@ class MenuScene:
                 True,
                 (160, 220, 160),
             )
-            screen.blit(info, info.get_rect(center=(cx, 145)))
+            screen.blit(info, info.get_rect(center=(cx, cy - 110)))
 
         self.option_rects.clear()
-        start_y = 200
         spacing = 50
+        block_height = (len(self.options) - 1) * spacing
+        start_y = cy - block_height // 2
         for index, option in enumerate(self.options):
             color = (255, 220, 0) if index == self.selected_index else (210, 210, 210)
             option_text = self.option_font.render(option, True, color)

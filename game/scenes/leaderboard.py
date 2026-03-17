@@ -58,13 +58,15 @@ class LeaderboardScene:
 
     def draw(self, screen):
         screen.fill((15, 22, 35))
-        cx = screen.get_width() // 2
+        w, h = screen.get_size()
+        cx = w // 2
+        cy = h // 2
 
         title = self.title_font.render("LEADERBOARD", True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, 60)))
+        screen.blit(title, title.get_rect(center=(cx, cy - 220)))
 
         self.tab_rects.clear()
-        tab_y = 115
+        tab_y = cy - 155
         tab_spacing = 180
         tab_start_x = cx - tab_spacing
         for i, dif in enumerate(DIFICULTADES):
@@ -80,7 +82,7 @@ class LeaderboardScene:
         dificultad = DIFICULTADES[self.tab_index]
         scores = self.rankings_cache.get(dificultad, [])
 
-        start_y = 170
+        start_y = cy - 100
         spacing = 38
         if scores:
             for pos, (nombre, puntos) in enumerate(scores, start=1):
@@ -91,9 +93,9 @@ class LeaderboardScene:
             screen.blit(empty, empty.get_rect(center=(cx, start_y + 60)))
 
         nav_hint = self.info_font.render("< LEFT / RIGHT > to switch difficulty", True, (140, 140, 140))
-        screen.blit(nav_hint, nav_hint.get_rect(center=(cx, screen.get_height() - 70)))
+        screen.blit(nav_hint, nav_hint.get_rect(center=(cx, h - 70)))
 
         back_color = (255, 220, 0) if self.back_hover else (200, 200, 200)
         back_text = self.info_font.render("BACK (ESC)", True, back_color)
-        self.back_rect = back_text.get_rect(center=(cx, screen.get_height() - 35))
+        self.back_rect = back_text.get_rect(center=(cx, h - 35))
         screen.blit(back_text, self.back_rect)

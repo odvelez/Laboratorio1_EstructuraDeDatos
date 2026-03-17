@@ -17,6 +17,36 @@
                 "dificil": []
             },
             "password": "6601081bcbaf25b8"
+        },
+        "jesus": {
+            "maxScore": 2428,
+            "attempts": [
+                {
+                    "score": 108,
+                    "fecha": "2026-03-17 12:44:20",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 1168,
+                    "fecha": "2026-03-17 12:44:43",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 2428,
+                    "fecha": "2026-03-17 12:45:30",
+                    "dificultad": "medio"
+                }
+            ],
+            "rankings": {
+                "facil": [],
+                "medio": [
+                    2428,
+                    1168,
+                    108
+                ],
+                "dificil": []
+            },
+            "password": "a39ca0c052d72911"
         }
     }
 }

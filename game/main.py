@@ -10,25 +10,15 @@ import pygame
 
 from scenes.login import LoginScene
 
-
-def toggle_fullscreen(is_fullscreen, windowed_size):
-    if is_fullscreen:
-        screen = pygame.display.set_mode(windowed_size)
-        return screen, False
-
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    return screen, True
+WINDOWED_SIZE = (800, 600)
 
 
 def main():
     pygame.init()
 
-    width, height = 800, 600
-    windowed_size = (width, height)
-    screen = pygame.display.set_mode(windowed_size)
+    screen = pygame.display.set_mode(WINDOWED_SIZE)
     pygame.display.set_caption("Laboratorio 1 - Escenas")
     clock = pygame.time.Clock()
-    is_fullscreen = False
 
     current_scene = LoginScene()
     running = True
@@ -38,7 +28,11 @@ def main():
 
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
-                screen, is_fullscreen = toggle_fullscreen(is_fullscreen, windowed_size)
+                flags = screen.get_flags()
+                if flags & pygame.FULLSCREEN:
+                    screen = pygame.display.set_mode(WINDOWED_SIZE)
+                else:
+                    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
         current_scene.handle_events(events)
         current_scene.update()
@@ -50,6 +44,7 @@ def main():
         elif getattr(current_scene, "should_quit", False):
             running = False
 
+        screen = pygame.display.get_surface()
         clock.tick(60)
 
     pygame.quit()

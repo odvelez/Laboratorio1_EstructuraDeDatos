@@ -172,12 +172,15 @@ class LoginScene:
             self._draw_input(screen, cx)
 
     def _draw_select(self, screen, cx):
+        h = screen.get_height()
+        cy = h // 2
+
         title = self.title_font.render("WELCOME", True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, 140)))
+        screen.blit(title, title.get_rect(center=(cx, cy - 100)))
 
         self.option_rects.clear()
-        start_y = 270
         spacing = 60
+        start_y = cy + 10
         for i, option in enumerate(self.menu_options):
             color = (255, 220, 0) if i == self.menu_index else (210, 210, 210)
             text = self.option_font.render(option, True, color)
@@ -186,16 +189,19 @@ class LoginScene:
             screen.blit(text, rect)
 
         hint = self.hint_font.render("ESC to quit", True, (120, 120, 120))
-        screen.blit(hint, hint.get_rect(center=(cx, screen.get_height() - 35)))
+        screen.blit(hint, hint.get_rect(center=(cx, h - 35)))
 
     def _draw_input(self, screen, cx):
+        h = screen.get_height()
+        cy = h // 2
+
         mode_label = "REGISTER" if self.mode == MODE_REGISTER else "LOGIN"
         title = self.title_font.render(mode_label, True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, 80)))
+        screen.blit(title, title.get_rect(center=(cx, cy - 180)))
 
         box_w, box_h = 340, 44
-        user_y = 170
-        pass_y = 270
+        user_y = cy - 90
+        pass_y = cy + 10
 
         user_label = self.label_font.render("Username:", True, (180, 180, 180))
         screen.blit(user_label, user_label.get_rect(midleft=(cx - box_w // 2, user_y - 25)))
@@ -225,19 +231,21 @@ class LoginScene:
         pass_surf = self.input_font.render(pass_display, True, (255, 255, 255))
         screen.blit(pass_surf, pass_surf.get_rect(midleft=(pass_box.x + 12, pass_box.centery)))
 
+        msg_y = cy + 100
         if self.mensaje_error:
             err = self.msg_font.render(self.mensaje_error, True, (255, 80, 80))
-            screen.blit(err, err.get_rect(center=(cx, 365)))
+            screen.blit(err, err.get_rect(center=(cx, msg_y)))
 
         if self.mensaje_ok:
             ok = self.msg_font.render(self.mensaje_ok, True, (80, 255, 120))
-            screen.blit(ok, ok.get_rect(center=(cx, 365)))
+            screen.blit(ok, ok.get_rect(center=(cx, msg_y)))
 
         hints = [
             "TAB to switch field",
             "ENTER to submit",
             "ESC to go back",
         ]
-        for i, h in enumerate(hints):
-            line = self.hint_font.render(h, True, (120, 120, 120))
-            screen.blit(line, line.get_rect(center=(cx, 420 + i * 24)))
+        hint_start = cy + 150
+        for i, hint in enumerate(hints):
+            line = self.hint_font.render(hint, True, (120, 120, 120))
+            screen.blit(line, line.get_rect(center=(cx, hint_start + i * 24)))
