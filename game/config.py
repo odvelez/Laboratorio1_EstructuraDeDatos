@@ -7,13 +7,13 @@ config_dificultad = {
         "velocidad_obstaculos": 15,
     },
     "medio": {
-        "velocidad_juego": 17,
+        "velocidad_juego": 15,
         "spawn_obstaculos": 30,
-        "velocidad_obstaculos":22,
+        "velocidad_obstaculos":30,
     },
     "dificil": {
-        "velocidad_juego":8,
-        "spawn_obstaculos": 20,
+        "velocidad_juego":10,
+        "spawn_obstaculos": 15,
         "velocidad_obstaculos": 36,
     },
 }
