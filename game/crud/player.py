@@ -1,8 +1,13 @@
 from datetime import datetime
 
 from crud import save_system
+from persistence.hash_table import hash_string
 
 jugador_actual = None
+
+
+def _hash_password(password):
+    return hash_string(password)
 
 
 class Player:
@@ -70,27 +75,61 @@ class PlayerManager:
     def __init__(self):
         self.datos = save_system.cargar_datos()
 
-    def registrar_o_login(self, nombre):
-        global jugador_actual
-
+    def register_user(self, username, password):
         players = self.datos.get("players", {})
 
-        if nombre in players:
-            jugador_actual = Player.from_dict(nombre, players[nombre])
-        else:
-            jugador_actual = Player(nombre)
-            players[nombre] = jugador_actual.to_dict()
-            self.datos["players"] = players
+        if username in players:
+            existing = players[username]
+            if existing.get("password", ""):
+                return None, "Username already exists"
+            existing["password"] = _hash_password(password)
             self._guardar()
+            return Player.from_dict(username, existing), ""
 
-        return jugador_actual
+        hashed = _hash_password(password)
+        nuevo = Player(username)
+        players[username] = nuevo.to_dict()
+        players[username]["password"] = hashed
+        self.datos["players"] = players
+        self._guardar()
+
+        return nuevo, ""
+
+    def login_user(self, username, password):
+        players = self.datos.get("players", {})
+
+        if username not in players:
+            return None, "User not found"
+
+        stored = players[username].get("password", "")
+        if not stored:
+            return None, "Account has no password, register again"
+
+        if not self.validate_user(username, password):
+            return None, "Incorrect password"
+
+        return Player.from_dict(username, players[username]), ""
+
+    def validate_user(self, username, password):
+        players = self.datos.get("players", {})
+        if username not in players:
+            return False
+
+        stored = players[username].get("password", "")
+        return stored == _hash_password(password)
+
+    def set_jugador_actual(self, jugador):
+        global jugador_actual
+        jugador_actual = jugador
 
     def registrar_intento(self, score, dificultad):
         if jugador_actual is None:
             return
 
         jugador_actual.registrar_intento(score, dificultad)
-        self.datos["players"][jugador_actual.nombre] = jugador_actual.to_dict()
+        player_data = jugador_actual.to_dict()
+        player_data["password"] = self.datos["players"][jugador_actual.nombre].get("password", "")
+        self.datos["players"][jugador_actual.nombre] = player_data
         self._guardar()
 
     def get_jugador_actual(self):

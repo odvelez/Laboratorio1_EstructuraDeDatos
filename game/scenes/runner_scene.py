@@ -40,6 +40,15 @@ class RunnerScene:
         self.pause_font = pygame.font.Font(None, 80)
         self.diff_label = config.dificultad_actual.upper()
 
+    def _sync_screen_size(self):
+        display_surface = pygame.display.get_surface()
+        if display_surface is None:
+            return
+
+        self.width, self.height = display_surface.get_size()
+        self.player_y = self.height - 60
+        self.player_x = max(0, min(self.player_x, self.width - self.player_width))
+
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
@@ -53,6 +62,8 @@ class RunnerScene:
                     self._guardar_y_salir()
 
     def update(self):
+        self._sync_screen_size()
+
         if self.pausado:
             return
 
@@ -99,6 +110,7 @@ class RunnerScene:
                 break
 
     def draw(self, screen):
+        self._sync_screen_size()
         screen.fill((18, 18, 25))
 
         player_rect = pygame.Rect(self.player_x, self.player_y, self.player_width, self.player_height)
