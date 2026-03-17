@@ -22,11 +22,11 @@ class RunnerScene:
         self.player_speed = cfg["velocidad_juego"]
 
         self.obstacles = []
-        self.obstacle_width = 60
-        self.obstacle_height = 60
-        self.spawn_interval = cfg["spawn_obstaculos"]
+        self.obstacle_width = 80
+        self.obstacle_height = 80
+        self.spawn_interval = 45
         self.spawn_counter = 0
-        self.speed = cfg["velocidad_obstaculos"]
+        self.speed = 25
         self.score = 0
         self.distance = 0
 
