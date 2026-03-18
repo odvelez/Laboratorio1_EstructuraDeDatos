@@ -1,16 +1,15 @@
-from crud import save_system
+from persistence.hash_table import HashTable
 
 MAX_ENTRIES = 10
 
 
 def obtener_ranking_global(dificultad):
-    datos = save_system.cargar_datos()
-    players = datos.get("players", {})
+    from crud.player import get_manager
+    mgr = get_manager()
 
     entradas = []
-    for nombre, info in players.items():
-        rankings = info.get("rankings", {})
-        scores = rankings.get(dificultad, [])
+    for nombre, player in mgr.players.items():
+        scores = player.rankings.get(dificultad)
         if scores:
             entradas.append((nombre, max(scores)))
 
@@ -19,8 +18,8 @@ def obtener_ranking_global(dificultad):
 
 
 def obtener_todos_los_rankings():
-    return {
-        "facil": obtener_ranking_global("facil"),
-        "medio": obtener_ranking_global("medio"),
-        "dificil": obtener_ranking_global("dificil"),
-    }
+    ht = HashTable(size=16)
+    ht.put("facil", obtener_ranking_global("facil"))
+    ht.put("medio", obtener_ranking_global("medio"))
+    ht.put("dificil", obtener_ranking_global("dificil"))
+    return ht

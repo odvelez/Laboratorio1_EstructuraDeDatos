@@ -10,43 +10,13 @@
                 }
             ],
             "rankings": {
-                "facil": [],
                 "medio": [
                     648
                 ],
+                "facil": [],
                 "dificil": []
             },
             "password": "6601081bcbaf25b8"
-        },
-        "jesus": {
-            "maxScore": 2428,
-            "attempts": [
-                {
-                    "score": 108,
-                    "fecha": "2026-03-17 12:44:20",
-                    "dificultad": "medio"
-                },
-                {
-                    "score": 1168,
-                    "fecha": "2026-03-17 12:44:43",
-                    "dificultad": "medio"
-                },
-                {
-                    "score": 2428,
-                    "fecha": "2026-03-17 12:45:30",
-                    "dificultad": "medio"
-                }
-            ],
-            "rankings": {
-                "facil": [],
-                "medio": [
-                    2428,
-                    1168,
-                    108
-                ],
-                "dificil": []
-            },
-            "password": "a39ca0c052d72911"
         },
         "monte_1003": {
             "maxScore": 468,
@@ -78,10 +48,10 @@
                 }
             ],
             "rankings": {
-                "facil": [],
                 "medio": [
                     412
                 ],
+                "facil": [],
                 "dificil": [
                     468,
                     108,
@@ -90,6 +60,159 @@
                 ]
             },
             "password": "4d4a95e42d6c8336"
+        },
+        "jesus": {
+            "maxScore": 2428,
+            "attempts": [
+                {
+                    "score": 108,
+                    "fecha": "2026-03-17 12:44:20",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 1168,
+                    "fecha": "2026-03-17 12:44:43",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 2428,
+                    "fecha": "2026-03-17 12:45:30",
+                    "dificultad": "medio"
+                }
+            ],
+            "rankings": {
+                "medio": [
+                    2428,
+                    1168,
+                    108
+                ],
+                "facil": [],
+                "dificil": []
+            },
+            "password": "a39ca0c052d72911"
+        },
+        "dickman": {
+            "maxScore": 778,
+            "attempts": [
+                {
+                    "score": 228,
+                    "fecha": "2026-03-18 17:37:48",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 168,
+                    "fecha": "2026-03-18 17:37:55",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-18 17:37:59",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 178,
+                    "fecha": "2026-03-18 17:38:51",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 778,
+                    "fecha": "2026-03-18 17:39:06",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 55,
+                    "fecha": "2026-03-18 17:39:16",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 278,
+                    "fecha": "2026-03-18 17:39:24",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 203,
+                    "fecha": "2026-03-18 17:39:29",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 83,
+                    "fecha": "2026-03-18 17:39:33",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 188,
+                    "fecha": "2026-03-18 17:39:38",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 68,
+                    "fecha": "2026-03-18 17:39:43",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 143,
+                    "fecha": "2026-03-18 17:39:47",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 173,
+                    "fecha": "2026-03-18 17:40:20",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 83,
+                    "fecha": "2026-03-18 17:40:24",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 173,
+                    "fecha": "2026-03-18 17:40:29",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 68,
+                    "fecha": "2026-03-18 17:40:33",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 158,
+                    "fecha": "2026-03-18 17:40:38",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 203,
+                    "fecha": "2026-03-18 17:40:43",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 203,
+                    "fecha": "2026-03-18 17:40:49",
+                    "dificultad": "dificil"
+                }
+            ],
+            "rankings": {
+                "medio": [
+                    778,
+                    228,
+                    178,
+                    168,
+                    48
+                ],
+                "facil": [],
+                "dificil": [
+                    278,
+                    203,
+                    203,
+                    203,
+                    188,
+                    173,
+                    173,
+                    158,
+                    143,
+                    83
+                ]
+            },
+            "password": "70fcf83eb2f02122"
         }
     }
 }
