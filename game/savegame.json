@@ -47,6 +47,49 @@
                 "dificil": []
             },
             "password": "a39ca0c052d72911"
+        },
+        "monte_1003": {
+            "maxScore": 468,
+            "attempts": [
+                {
+                    "score": 412,
+                    "fecha": "2026-03-18 15:29:21",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 33,
+                    "fecha": "2026-03-18 15:29:42",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-18 15:29:46",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 33,
+                    "fecha": "2026-03-18 15:29:49",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 468,
+                    "fecha": "2026-03-18 15:29:59",
+                    "dificultad": "dificil"
+                }
+            ],
+            "rankings": {
+                "facil": [],
+                "medio": [
+                    412
+                ],
+                "dificil": [
+                    468,
+                    108,
+                    33,
+                    33
+                ]
+            },
+            "password": "4d4a95e42d6c8336"
         }
     }
 }

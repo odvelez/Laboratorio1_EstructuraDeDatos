@@ -1,15 +1,11 @@
 import pygame
-import os
-import sys
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from crud import save_system
-
+from persistence.hash_table import HashTable
 
 
 # ── Colores ───────────────────────────────────
-BG          = (15, 22, 35)
+BG           = (15, 22, 35)
 BUCKET_EMPTY = (30, 38, 55)
 BUCKET_USED  = (40, 80, 130)
 COLLISION    = (180, 80,  40)
@@ -26,7 +22,6 @@ ARROW_COLOR  = (160, 160, 180)
 
 
 def _build_hashtable():
-    """Construye una HashTable con los datos reales del savegame."""
     datos = save_system.cargar_datos()
     ht = HashTable(size=16)
     for nombre, info in datos.get("players", {}).items():
@@ -35,11 +30,6 @@ def _build_hashtable():
 
 
 def _bucket_stats(ht):
-    """
-    Devuelve lista de buckets con sus cadenas.
-    Cada elemento: (index, [ key, key, ... ])
-    Solo devuelve los primeros MAX_VISIBLE buckets.
-    """
     MAX_VISIBLE = 16
     result = []
     for i, bucket in enumerate(ht.table[:MAX_VISIBLE]):
@@ -60,24 +50,24 @@ class HashTableScene:
         self.ht      = _build_hashtable()
         self.buckets = _bucket_stats(self.ht)
 
-        # scroll para ver más buckets
         self.scroll       = 0
         self.ROWS_VISIBLE = 8
 
-        # bucket seleccionado con hover
         self.hovered_bucket = -1
         self.bucket_rects   = []
 
-        # fuentes
-        self.title_font  = pygame.font.Font(None, 52)
-        self.label_font  = pygame.font.Font(None, 30)
-        self.small_font  = pygame.font.Font(None, 24)
-        self.stat_font   = pygame.font.Font(None, 28)
+        self.title_font = pygame.font.Font(None, 52)
+        self.label_font = pygame.font.Font(None, 30)
+        self.small_font = pygame.font.Font(None, 24)
+        self.stat_font  = pygame.font.Font(None, 28)
 
         self.back_rect  = pygame.Rect(0, 0, 0, 0)
         self.back_hover = False
 
-    # ── Eventos ───────────────────────────────
+    @property
+    def load_factor(self):
+        return self.count / self.size
+
     def handle_events(self, events):
         mouse_pos = pygame.mouse.get_pos()
         self.back_hover = self.back_rect.collidepoint(mouse_pos)
@@ -105,9 +95,9 @@ class HashTableScene:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and self.back_rect.collidepoint(mouse_pos):
                     self._go_back()
-                if event.button == 4:   # scroll arriba
+                if event.button == 4:
                     self.scroll = max(self.scroll - 1, 0)
-                if event.button == 5:   # scroll abajo
+                if event.button == 5:
                     max_scroll = max(0, len(self.buckets) - self.ROWS_VISIBLE)
                     self.scroll = min(self.scroll + 1, max_scroll)
 
@@ -118,26 +108,21 @@ class HashTableScene:
     def update(self):
         pass
 
-    # ── Draw principal ────────────────────────
     def draw(self, screen):
         screen.fill(BG)
         w, h = screen.get_size()
 
-        # título
         title = self.title_font.render("HASH TABLE VIEWER", True, (255, 255, 255))
         screen.blit(title, title.get_rect(center=(w // 2, 32)))
 
-        # línea separadora
         pygame.draw.line(screen, (50, 60, 80), (40, 58), (w - 40, 58), 1)
 
-        # layout: panel izquierdo (buckets) | panel derecho (stats)
         panel_left_w  = int(w * 0.62)
         panel_right_x = panel_left_w + 20
 
         self._draw_buckets(screen, 30, 70, panel_left_w - 30, h - 110)
         self._draw_stats(screen, panel_right_x, 70, w - panel_right_x - 20, h - 110)
 
-        # footer
         pygame.draw.line(screen, (50, 60, 80), (40, h - 50), (w - 40, h - 50), 1)
         hint = self.small_font.render("↑ ↓  scroll    |    ESC  back", True, DIM_COLOR)
         screen.blit(hint, hint.get_rect(center=(w // 2 - 60, h - 28)))
@@ -147,18 +132,17 @@ class HashTableScene:
         self.back_rect = back_text.get_rect(midright=(w - 30, h - 28))
         screen.blit(back_text, self.back_rect)
 
-    # ── Panel izquierdo: buckets ──────────────
     def _draw_buckets(self, screen, x, y, panel_w, panel_h):
         label = self.label_font.render("BUCKETS", True, ACCENT)
         screen.blit(label, (x, y))
         y += 28
 
-        row_h     = (panel_h - 30) // self.ROWS_VISIBLE
-        row_h     = max(row_h, 42)
-        idx_w     = 42
-        node_w    = 120
-        node_h    = row_h - 10
-        arrow_w   = 24
+        row_h  = (panel_h - 30) // self.ROWS_VISIBLE
+        row_h  = max(row_h, 42)
+        idx_w  = 42
+        node_w = 120
+        node_h = row_h - 10
+        arrow_w = 24
 
         visible = self.buckets[self.scroll: self.scroll + self.ROWS_VISIBLE]
         self.bucket_rects = []
@@ -167,19 +151,16 @@ class HashTableScene:
             ry       = y + row * row_h
             is_hover = (self.hovered_bucket == bucket_idx)
 
-            # ── índice del bucket ──
             idx_rect = pygame.Rect(x, ry + (row_h - node_h) // 2, idx_w, node_h)
             idx_bg   = (50, 60, 90) if is_hover else (35, 45, 65)
             pygame.draw.rect(screen, idx_bg, idx_rect, border_radius=5)
             idx_txt  = self.label_font.render(str(bucket_idx), True, DIM_COLOR)
             screen.blit(idx_txt, idx_txt.get_rect(center=idx_rect.center))
 
-            # rect clicable para el hover de toda la fila
             row_rect = pygame.Rect(x, ry, panel_w, row_h - 2)
             self.bucket_rects.append(row_rect)
 
             if not chain:
-                # bucket vacío
                 empty_rect = pygame.Rect(x + idx_w + 8, ry + (row_h - node_h) // 2,
                                          node_w, node_h)
                 pygame.draw.rect(screen, BUCKET_EMPTY, empty_rect, border_radius=6)
@@ -187,7 +168,6 @@ class HashTableScene:
                 nil = self.small_font.render("NULL", True, DIM_COLOR)
                 screen.blit(nil, nil.get_rect(center=empty_rect.center))
             else:
-                # nodos encadenados
                 cx_node = x + idx_w + 8
                 for ni, key in enumerate(chain):
                     color = CHAIN_COLOR if ni > 0 else (BUCKET_USED if not is_hover
@@ -198,20 +178,17 @@ class HashTableScene:
                     pygame.draw.rect(screen, (255, 255, 255) if is_hover else (80, 100, 130),
                                      node_rect, 1, border_radius=6)
 
-                    # texto del nodo (truncar si es largo)
                     display = key if len(key) <= 11 else key[:10] + "…"
                     ktxt = self.small_font.render(display, True, TEXT_COLOR)
                     screen.blit(ktxt, ktxt.get_rect(center=node_rect.center))
 
                     cx_node += node_w
 
-                    # flecha → next
                     if ni < len(chain) - 1:
                         ax = cx_node
                         ay = ry + row_h // 2
                         pygame.draw.line(screen, ARROW_COLOR,
                                          (ax, ay), (ax + arrow_w - 4, ay), 2)
-                        # punta de flecha
                         pygame.draw.polygon(screen, ARROW_COLOR, [
                             (ax + arrow_w, ay),
                             (ax + arrow_w - 7, ay - 4),
@@ -219,7 +196,6 @@ class HashTableScene:
                         ])
                         cx_node += arrow_w
                     else:
-                        # NULL al final
                         ax = cx_node + 6
                         ay = ry + row_h // 2
                         pygame.draw.line(screen, ARROW_COLOR,
@@ -227,7 +203,6 @@ class HashTableScene:
                         nil = self.small_font.render("→ NULL", True, DIM_COLOR)
                         screen.blit(nil, nil.get_rect(midleft=(ax + 14, ay)))
 
-        # indicador scroll
         total = len(self.buckets)
         if total > self.ROWS_VISIBLE:
             shown_end = self.scroll + self.ROWS_VISIBLE
@@ -236,10 +211,7 @@ class HashTableScene:
                 True, DIM_COLOR)
             screen.blit(sc_txt, (x, y + self.ROWS_VISIBLE * row_h + 4))
 
-    # ── Panel derecho: estadísticas ───────────
     def _draw_stats(self, screen, x, y, panel_w, panel_h):
-
-        # ── Métricas principales ──────────────
         ht  = self.ht
         lf  = ht.load_factor
         col = sum(1 for _, chain in self.buckets if len(chain) > 1)
@@ -270,7 +242,6 @@ class HashTableScene:
         pygame.draw.line(screen, (50, 60, 80), (x, y), (x + panel_w, y), 1)
         y += 12
 
-        # ── Barra de factor de carga ──────────
         bar_label = self.label_font.render("LOAD FACTOR", True, ACCENT)
         screen.blit(bar_label, (x, y))
         y += 26
@@ -288,7 +259,6 @@ class HashTableScene:
 
         pygame.draw.rect(screen, (80, 100, 130), bar_rect, 1, border_radius=5)
 
-        # marcas 0.25 y 0.75
         for mark, label_txt in ((0.25, "0.25"), (0.75, "0.75")):
             mx = x + int(bar_w * mark)
             pygame.draw.line(screen, (160, 160, 180), (mx, y - 3), (mx, y + bar_h + 3), 1)
@@ -302,7 +272,6 @@ class HashTableScene:
         pygame.draw.line(screen, (50, 60, 80), (x, y), (x + panel_w, y), 1)
         y += 12
 
-        # ── Leyenda de colores ────────────────
         leg_label = self.label_font.render("LEGEND", True, ACCENT)
         screen.blit(leg_label, (x, y))
         y += 26
@@ -324,7 +293,6 @@ class HashTableScene:
         pygame.draw.line(screen, (50, 60, 80), (x, y), (x + panel_w, y), 1)
         y += 12
 
-        # ── Jugadores en la tabla ─────────────
         pl_label = self.label_font.render("PLAYERS IN TABLE", True, ACCENT)
         screen.blit(pl_label, (x, y))
         y += 26

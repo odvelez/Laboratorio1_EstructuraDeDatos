@@ -6,7 +6,7 @@ from crud import player
 
 class MenuScene:
     def __init__(self):
-        self.options = ["START GAME", "LEADERBOARD", "SETTINGS", "LOG OUT", "EXIT"]
+        self.options = ["START GAME", "LEADERBOARD", "HASH TABLE", "SETTINGS", "LOG OUT", "EXIT"]
         self.selected_index = 0
         self.next_scene = None
         self.should_quit = False
@@ -54,6 +54,10 @@ class MenuScene:
             from scenes.leaderboard import LeaderboardScene
 
             self.next_scene = LeaderboardScene()
+        elif option == "HASH TABLE":
+            from scenes.hashtable_scene import HashTableScene
+
+            self.next_scene = HashTableScene()
         elif option == "SETTINGS":
             from scenes.settings import SettingsScene
 
