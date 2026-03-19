@@ -12,11 +12,24 @@ def _hash_password(password):
 
 class Player:
     def __init__(self, nombre, max_score=0, attempts=None,
-                 rankings=None, password=""):
+                 rankings=None, password="", settings=None):
         self.nombre    = nombre
         self.max_score = max_score
         self.attempts  = attempts if attempts is not None else []
         self.password  = password
+
+        # Preferencias visuales / de juego por usuario
+        default_settings = {
+            "difficulty": "medio",
+            "volume": 5,
+            "fullscreen": False,
+        }
+        if settings is None:
+            self.settings = default_settings
+        else:
+            merged = default_settings.copy()
+            merged.update(settings)
+            self.settings = merged
 
         self.rankings = HashTable(size=16)
         if rankings is not None:
@@ -78,6 +91,7 @@ class Player:
             "attempts": attempts_out,
             "rankings": rankings_out,
             "password": self.password,
+            "settings": self.settings,
         }
 
     @classmethod
@@ -98,12 +112,15 @@ class Player:
                     a.get("dificultad", ""),
                 ))
 
+        settings = data.get("settings", {})
+
         return cls(
             nombre=nombre,
             max_score=data.get("maxScore", 0),
             attempts=attempts,
             rankings=rankings_items,
             password=data.get("password", ""),
+            settings=settings,
         )
 
 

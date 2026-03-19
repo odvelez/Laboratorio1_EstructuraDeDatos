@@ -57,45 +57,68 @@ class LeaderboardScene:
         pass
 
     def draw(self, screen):
-        screen.fill((15, 22, 35))
         w, h = screen.get_size()
         cx = w // 2
         cy = h // 2
 
+        screen.fill((8, 8, 26))
+        tile = 34
+        t = pygame.time.get_ticks() // 30
+        for x in range(-tile, w + tile, tile):
+            for y in range(-tile, h + tile, tile):
+                color = (22, 20, 60) if ((x + y + t) // tile) % 2 == 0 else (14, 14, 42)
+                rect = pygame.Rect(x, y, tile - 1, tile - 1)
+                pygame.draw.rect(screen, color, rect, 0, border_radius=4)
+
+        header = pygame.Rect(0, 0, w, 120)
+        pygame.draw.rect(screen, (30, 16, 70), header)
+        pygame.draw.rect(screen, (255, 220, 0), header, 2)
+
         title = self.title_font.render("LEADERBOARD", True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, cy - 220)))
+        screen.blit(title, title.get_rect(center=(cx, 55)))
 
         self.tab_rects.clear()
-        tab_y = cy - 155
-        tab_spacing = 180
+        tab_y = header.bottom + 35
+        tab_spacing = 170
         tab_start_x = cx - tab_spacing
         for i, dif in enumerate(DIFICULTADES):
             is_active = i == self.tab_index
-            color = (255, 220, 0) if is_active else (160, 160, 160)
+            chip_rect = pygame.Rect(0, 0, 130, 40)
+            chip_rect.center = (tab_start_x + i * tab_spacing, tab_y)
+            chip_bg = (40, 220, 140) if is_active else (26, 20, 80)
+            chip_border = (255, 255, 255) if is_active else (180, 160, 255)
+            pygame.draw.rect(screen, chip_bg, chip_rect, border_radius=16)
+            pygame.draw.rect(screen, chip_border, chip_rect, 2, border_radius=16)
+
+            color = (10, 10, 10) if is_active else (220, 220, 220)
             label = self.tab_font.render(dif.upper(), True, color)
-            rect = label.get_rect(center=(tab_start_x + i * tab_spacing, tab_y))
-            self.tab_rects.append(rect)
+            rect = label.get_rect(center=chip_rect.center)
+            self.tab_rects.append(chip_rect)
             screen.blit(label, rect)
-            if is_active:
-                pygame.draw.line(screen, color, (rect.left, rect.bottom + 2), (rect.right, rect.bottom + 2), 2)
 
         dificultad = DIFICULTADES[self.tab_index]
         scores = self.rankings_cache.get(dificultad, [])
 
-        start_y = cy - 100
+        panel = pygame.Rect(0, 0, 540, 320)
+        panel.center = (cx, cy + 40)
+        pygame.draw.rect(screen, (16, 12, 46), panel, border_radius=18)
+        pygame.draw.rect(screen, (120, 90, 255), panel, 3, border_radius=18)
+
+        start_y = panel.top + 50
         spacing = 38
         if scores:
             for pos, (nombre, puntos) in enumerate(scores, start=1):
-                line = self.item_font.render(f"{pos}. {nombre}  {puntos}", True, (220, 220, 220))
+                rank_color = (255, 230, 120) if pos == 1 else (200, 220, 255)
+                line = self.item_font.render(f"{pos}. {nombre}  {puntos}", True, rank_color)
                 screen.blit(line, line.get_rect(center=(cx, start_y + (pos - 1) * spacing)))
         else:
-            empty = self.item_font.render("No scores yet", True, (130, 130, 130))
+            empty = self.item_font.render("No scores yet", True, (140, 140, 170))
             screen.blit(empty, empty.get_rect(center=(cx, start_y + 60)))
 
-        nav_hint = self.info_font.render("< LEFT / RIGHT > to switch difficulty", True, (140, 140, 140))
+        nav_hint = self.info_font.render("< LEFT / RIGHT >  switch difficulty", True, (170, 170, 210))
         screen.blit(nav_hint, nav_hint.get_rect(center=(cx, h - 70)))
 
-        back_color = (255, 220, 0) if self.back_hover else (200, 200, 200)
+        back_color = (255, 220, 0) if self.back_hover else (210, 210, 230)
         back_text = self.info_font.render("BACK (ESC)", True, back_color)
         self.back_rect = back_text.get_rect(center=(cx, h - 35))
         screen.blit(back_text, self.back_rect)

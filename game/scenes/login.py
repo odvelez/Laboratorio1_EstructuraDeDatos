@@ -1,6 +1,8 @@
 import pygame
 
+import config
 from crud import player
+from scenes.settings import WINDOWED_SIZE
 
 STATE_SELECT = "select"
 STATE_INPUT = "input"
@@ -144,17 +146,28 @@ class LoginScene:
                 self.mensaje_error = error
                 return
             mgr.set_jugador_actual(jugador)
-            from scenes.menu import MenuScene
-            self.next_scene = MenuScene()
-
         elif self.mode == MODE_LOGIN:
             jugador, error = mgr.login_user(username, password)
             if error:
                 self.mensaje_error = error
                 return
             mgr.set_jugador_actual(jugador)
-            from scenes.menu import MenuScene
-            self.next_scene = MenuScene()
+
+        # Aplicar configuraciones guardadas del jugador (dificultad, fullscreen)
+        if jugador is not None:
+            settings = getattr(jugador, "settings", {})
+            dif = settings.get("difficulty")
+            if dif in config.dificultades:
+                config.dificultad_actual = dif
+
+            fullscreen_pref = settings.get("fullscreen", False)
+            if fullscreen_pref:
+                pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            else:
+                pygame.display.set_mode(WINDOWED_SIZE)
+
+        from scenes.menu import MenuScene
+        self.next_scene = MenuScene()
 
     def update(self):
         self.cursor_timer += 1
@@ -163,8 +176,18 @@ class LoginScene:
             self.cursor_visible = not self.cursor_visible
 
     def draw(self, screen):
-        screen.fill((15, 15, 30))
-        cx = screen.get_width() // 2
+        w, h = screen.get_size()
+        cx = w // 2
+
+        screen.fill((6, 4, 18))
+        tile = 32
+        t = pygame.time.get_ticks() // 25
+        for x in range(-tile, w + tile, tile):
+            for y in range(-tile, h + tile, tile):
+                phase = ((x + y + t) // tile) % 2
+                color = (25, 18, 60) if phase == 0 else (18, 10, 40)
+                rect = pygame.Rect(int(x), int(y), int(tile - 2), int(tile - 2))
+                pygame.draw.rect(screen, color, rect, 0, border_radius=4)
 
         if self.state == STATE_SELECT:
             self._draw_select(screen, cx)
@@ -175,41 +198,58 @@ class LoginScene:
         h = screen.get_height()
         cy = h // 2
 
+        card = pygame.Rect(0, 0, 420, 220)
+        card.center = (cx, cy - 10)
+        pygame.draw.rect(screen, (20, 14, 60), card, border_radius=18)
+        pygame.draw.rect(screen, (120, 90, 255), card, 3, border_radius=18)
+
         title = self.title_font.render("WELCOME", True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, cy - 100)))
+        screen.blit(title, title.get_rect(center=(cx, card.top + 55)))
 
         self.option_rects.clear()
-        spacing = 60
-        start_y = cy + 10
+        spacing = 70
+        start_y = card.top + 110
         for i, option in enumerate(self.menu_options):
-            color = (255, 220, 0) if i == self.menu_index else (210, 210, 210)
-            text = self.option_font.render(option, True, color)
-            rect = text.get_rect(center=(cx, start_y + i * spacing))
-            self.option_rects.append(rect)
-            screen.blit(text, rect)
+            is_selected = i == self.menu_index
+            btn_rect = pygame.Rect(0, 0, card.width - 80, 44)
+            btn_rect.center = (cx, start_y + i * spacing)
+            bg = (40, 220, 140) if is_selected else (35, 24, 80)
+            border = (255, 255, 255) if is_selected else (160, 140, 255)
+            pygame.draw.rect(screen, bg, btn_rect, border_radius=12)
+            pygame.draw.rect(screen, border, btn_rect, 2, border_radius=12)
 
-        hint = self.hint_font.render("ESC to quit", True, (120, 120, 120))
+            label_color = (10, 10, 10) if is_selected else (230, 230, 230)
+            text = self.option_font.render(option, True, label_color)
+            screen.blit(text, text.get_rect(center=btn_rect.center))
+            self.option_rects.append(btn_rect)
+
+        hint = self.hint_font.render("ESC to quit", True, (160, 160, 190))
         screen.blit(hint, hint.get_rect(center=(cx, h - 35)))
 
     def _draw_input(self, screen, cx):
         h = screen.get_height()
         cy = h // 2
 
+        card = pygame.Rect(0, 0, 520, 360)
+        card.center = (cx, cy)
+        pygame.draw.rect(screen, (18, 10, 45), card, border_radius=20)
+        pygame.draw.rect(screen, (90, 255, 200), card, 3, border_radius=20)
+
         mode_label = "REGISTER" if self.mode == MODE_REGISTER else "LOGIN"
         title = self.title_font.render(mode_label, True, (255, 255, 255))
-        screen.blit(title, title.get_rect(center=(cx, cy - 180)))
+        screen.blit(title, title.get_rect(center=(cx, card.top + 45)))
 
-        box_w, box_h = 340, 44
-        user_y = cy - 90
-        pass_y = cy + 10
+        box_w, box_h = 360, 44
+        user_y = card.top + 110
+        pass_y = card.top + 195
 
-        user_label = self.label_font.render("Username:", True, (180, 180, 180))
-        screen.blit(user_label, user_label.get_rect(midleft=(cx - box_w // 2, user_y - 25)))
+        user_label = self.label_font.render("Username", True, (170, 210, 255))
+        screen.blit(user_label, user_label.get_rect(midleft=(cx - box_w // 2, user_y - 26)))
 
         user_box = pygame.Rect(cx - box_w // 2, user_y, box_w, box_h)
-        border_color_u = (120, 180, 255) if self.active_field == FIELD_USERNAME else (80, 80, 110)
-        pygame.draw.rect(screen, (35, 35, 55), user_box)
-        pygame.draw.rect(screen, border_color_u, user_box, 2)
+        border_color_u = (120, 220, 255) if self.active_field == FIELD_USERNAME else (70, 80, 120)
+        pygame.draw.rect(screen, (28, 20, 70), user_box, border_radius=10)
+        pygame.draw.rect(screen, border_color_u, user_box, 2, border_radius=10)
 
         user_display = self.username
         if self.active_field == FIELD_USERNAME and self.cursor_visible:
@@ -217,13 +257,13 @@ class LoginScene:
         user_surf = self.input_font.render(user_display, True, (255, 255, 255))
         screen.blit(user_surf, user_surf.get_rect(midleft=(user_box.x + 12, user_box.centery)))
 
-        pass_label = self.label_font.render("Password:", True, (180, 180, 180))
-        screen.blit(pass_label, pass_label.get_rect(midleft=(cx - box_w // 2, pass_y - 25)))
+        pass_label = self.label_font.render("Password", True, (170, 210, 255))
+        screen.blit(pass_label, pass_label.get_rect(midleft=(cx - box_w // 2, pass_y - 26)))
 
         pass_box = pygame.Rect(cx - box_w // 2, pass_y, box_w, box_h)
-        border_color_p = (120, 180, 255) if self.active_field == FIELD_PASSWORD else (80, 80, 110)
-        pygame.draw.rect(screen, (35, 35, 55), pass_box)
-        pygame.draw.rect(screen, border_color_p, pass_box, 2)
+        border_color_p = (120, 220, 255) if self.active_field == FIELD_PASSWORD else (70, 80, 120)
+        pygame.draw.rect(screen, (28, 20, 70), pass_box, border_radius=10)
+        pygame.draw.rect(screen, border_color_p, pass_box, 2, border_radius=10)
 
         pass_display = "●" * len(self.password)
         if self.active_field == FIELD_PASSWORD and self.cursor_visible:
@@ -231,7 +271,7 @@ class LoginScene:
         pass_surf = self.input_font.render(pass_display, True, (255, 255, 255))
         screen.blit(pass_surf, pass_surf.get_rect(midleft=(pass_box.x + 12, pass_box.centery)))
 
-        msg_y = cy + 100
+        msg_y = card.bottom - 90
         if self.mensaje_error:
             err = self.msg_font.render(self.mensaje_error, True, (255, 80, 80))
             screen.blit(err, err.get_rect(center=(cx, msg_y)))
@@ -241,11 +281,11 @@ class LoginScene:
             screen.blit(ok, ok.get_rect(center=(cx, msg_y)))
 
         hints = [
-            "TAB to switch field",
-            "ENTER to submit",
-            "ESC to go back",
+            "TAB  switch field",
+            "ENTER  submit",
+            "ESC  back",
         ]
-        hint_start = cy + 150
+        hint_start = card.bottom - 40
         for i, hint in enumerate(hints):
-            line = self.hint_font.render(hint, True, (120, 120, 120))
-            screen.blit(line, line.get_rect(center=(cx, hint_start + i * 24)))
+            line = self.hint_font.render(hint, True, (150, 150, 190))
+            screen.blit(line, line.get_rect(center=(cx, hint_start + i * 20)))

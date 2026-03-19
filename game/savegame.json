@@ -16,10 +16,74 @@
                 "facil": [],
                 "dificil": []
             },
-            "password": "6601081bcbaf25b8"
+            "password": "6601081bcbaf25b8",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
+        },
+        "isacm": {
+            "maxScore": 210,
+            "attempts": [
+                {
+                    "score": 75,
+                    "fecha": "2026-03-19 09:01:18",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 210,
+                    "fecha": "2026-03-19 09:01:24",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 60,
+                    "fecha": "2026-03-19 09:01:29",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 09:01:31",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 60,
+                    "fecha": "2026-03-19 09:01:32",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 09:01:34",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 45,
+                    "fecha": "2026-03-19 09:01:35",
+                    "dificultad": "dificil"
+                }
+            ],
+            "rankings": {
+                "medio": [],
+                "facil": [],
+                "dificil": [
+                    210,
+                    75,
+                    60,
+                    60,
+                    45,
+                    30,
+                    30
+                ]
+            },
+            "password": "4d4a95e42d6c8336",
+            "settings": {
+                "difficulty": "dificil",
+                "volume": 5,
+                "fullscreen": false
+            }
         },
         "monte_1003": {
-            "maxScore": 468,
+            "maxScore": 682,
             "attempts": [
                 {
                     "score": 412,
@@ -45,21 +109,353 @@
                     "score": 468,
                     "fecha": "2026-03-18 15:29:59",
                     "dificultad": "dificil"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-18 17:51:21",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-19 08:09:44",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 648,
+                    "fecha": "2026-03-19 08:09:57",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 08:10:06",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 08:10:08",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 180,
+                    "fecha": "2026-03-19 08:10:13",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 165,
+                    "fecha": "2026-03-19 08:10:19",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 209,
+                    "fecha": "2026-03-19 08:10:37",
+                    "dificultad": "facil"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 08:10:47",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 08:10:51",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 08:10:54",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-19 08:10:58",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 33,
+                    "fecha": "2026-03-19 08:11:01",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 123,
+                    "fecha": "2026-03-19 08:11:06",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 153,
+                    "fecha": "2026-03-19 08:11:10",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 123,
+                    "fecha": "2026-03-19 08:11:15",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 08:11:19",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 08:11:23",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 228,
+                    "fecha": "2026-03-19 08:11:30",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 394,
+                    "fecha": "2026-03-19 08:11:39",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 228,
+                    "fecha": "2026-03-19 08:11:45",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 08:11:49",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 33,
+                    "fecha": "2026-03-19 08:11:52",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-19 08:11:58",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 33,
+                    "fecha": "2026-03-19 08:12:05",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 382,
+                    "fecha": "2026-03-19 08:47:11",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 682,
+                    "fecha": "2026-03-19 08:47:25",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 382,
+                    "fecha": "2026-03-19 08:47:34",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 09:07:51",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 09:07:52",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 90,
+                    "fecha": "2026-03-19 09:07:54",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 60,
+                    "fecha": "2026-03-19 09:07:55",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 75,
+                    "fecha": "2026-03-19 09:07:57",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 165,
+                    "fecha": "2026-03-19 09:20:57",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 120,
+                    "fecha": "2026-03-19 09:21:00",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-19 09:21:01",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 90,
+                    "fecha": "2026-03-19 09:21:03",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 60,
+                    "fecha": "2026-03-19 09:21:04",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 60,
+                    "fecha": "2026-03-19 09:21:06",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 09:22:24",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 09:22:26",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 09:22:28",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 09:22:29",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 09:22:31",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 258,
+                    "fecha": "2026-03-19 09:22:36",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 09:22:37",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 09:22:39",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 09:22:41",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 199,
+                    "fecha": "2026-03-19 09:22:45",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 318,
+                    "fecha": "2026-03-19 09:22:51",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 198,
+                    "fecha": "2026-03-19 09:22:55",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 09:23:34",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 09:23:37",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 138,
+                    "fecha": "2026-03-19 09:23:39",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 228,
+                    "fecha": "2026-03-19 09:23:44",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 80,
+                    "fecha": "2026-03-19 09:23:45",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 168,
+                    "fecha": "2026-03-19 09:23:49",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 228,
+                    "fecha": "2026-03-19 09:23:53",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 09:23:54",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 168,
+                    "fecha": "2026-03-19 09:23:57",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 198,
+                    "fecha": "2026-03-19 09:24:01",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 288,
+                    "fecha": "2026-03-19 09:24:06",
+                    "dificultad": "medio"
                 }
             ],
             "rankings": {
                 "medio": [
-                    412
+                    682,
+                    648,
+                    412,
+                    382,
+                    382,
+                    318,
+                    288,
+                    258,
+                    228,
+                    228
                 ],
-                "facil": [],
+                "facil": [
+                    209
+                ],
                 "dificil": [
                     468,
-                    108,
-                    33,
-                    33
+                    394,
+                    228,
+                    228,
+                    180,
+                    165,
+                    165,
+                    153,
+                    138,
+                    138
                 ]
             },
-            "password": "4d4a95e42d6c8336"
+            "password": "4d4a95e42d6c8336",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
         },
         "jesus": {
             "maxScore": 2428,
@@ -89,7 +485,138 @@
                 "facil": [],
                 "dificil": []
             },
-            "password": "a39ca0c052d72911"
+            "password": "a39ca0c052d72911",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
+        },
+        "joel": {
+            "maxScore": 1012,
+            "attempts": [
+                {
+                    "score": 53,
+                    "fecha": "2026-03-19 08:48:06",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 442,
+                    "fecha": "2026-03-19 08:48:16",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 82,
+                    "fecha": "2026-03-19 08:48:21",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 82,
+                    "fecha": "2026-03-19 08:48:25",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 292,
+                    "fecha": "2026-03-19 08:48:32",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 142,
+                    "fecha": "2026-03-19 08:48:37",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 112,
+                    "fecha": "2026-03-19 08:48:42",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 262,
+                    "fecha": "2026-03-19 08:48:49",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 1012,
+                    "fecha": "2026-03-19 08:49:08",
+                    "dificultad": "medio"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 08:49:18",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 08:49:21",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 78,
+                    "fecha": "2026-03-19 08:49:24",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 93,
+                    "fecha": "2026-03-19 08:49:28",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 93,
+                    "fecha": "2026-03-19 08:49:32",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 108,
+                    "fecha": "2026-03-19 08:49:36",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 48,
+                    "fecha": "2026-03-19 08:49:39",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 63,
+                    "fecha": "2026-03-19 08:49:42",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 258,
+                    "fecha": "2026-03-19 08:49:49",
+                    "dificultad": "dificil"
+                }
+            ],
+            "rankings": {
+                "medio": [
+                    1012,
+                    442,
+                    292,
+                    262,
+                    142,
+                    112,
+                    82,
+                    82,
+                    53
+                ],
+                "facil": [],
+                "dificil": [
+                    258,
+                    108,
+                    93,
+                    93,
+                    78,
+                    63,
+                    48,
+                    48,
+                    48
+                ]
+            },
+            "password": "4442a0abe7d9ad4e",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
         },
         "dickman": {
             "maxScore": 778,
@@ -212,7 +739,12 @@
                     83
                 ]
             },
-            "password": "70fcf83eb2f02122"
+            "password": "70fcf83eb2f02122",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
         }
     }
 }
