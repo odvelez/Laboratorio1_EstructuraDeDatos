@@ -1,3 +1,10 @@
+"""
+Punto de entrada del juego. Compatible con escritorio y con pygbag (WebAssembly).
+
+Para web: instala pygame-ce y pygbag, luego desde esta carpeta `game`:
+pygbag .
+"""
+import asyncio
 import os
 import sys
 
@@ -13,7 +20,7 @@ from scenes.login import LoginScene
 WINDOWED_SIZE = (800, 600)
 
 
-def main():
+async def main():
     pygame.init()
 
     screen = pygame.display.set_mode(WINDOWED_SIZE)
@@ -46,9 +53,11 @@ def main():
 
         screen = pygame.display.get_surface()
         clock.tick(60)
+        # Necesario para pygbag: cede el control al runtime WASM cada frame
+        await asyncio.sleep(0)
 
     pygame.quit()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

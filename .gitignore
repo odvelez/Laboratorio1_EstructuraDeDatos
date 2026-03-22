@@ -1,0 +1,11 @@
+# pygbag / pygame-web
+game/build/
+**/build/web-cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+venv/
+.venv/
+env/

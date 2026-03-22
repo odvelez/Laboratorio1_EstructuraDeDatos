@@ -25,6 +25,32 @@ def cargar_datos():
 def guardar_datos(datos):
     with open(SAVE_FILE, "w", encoding="utf-8") as f:
         json.dump(datos, f, indent=4, ensure_ascii=False)
+    # Mismo JSON que en consola; en navegador (WASM) intentar persistir FS → IndexedDB
+    _try_sync_browser_filesystem()
+
+
+def _try_sync_browser_filesystem():
+    """En Emscripten/pygbag, volcar el FS virtual al almacenamiento del navegador."""
+    try:
+        import sys
+
+        if getattr(sys, "platform", "") != "emscripten":
+            return
+        # Pyodide expone FS.syncfs en algunos entornos pygame-web
+        try:
+            from pyodide_js._module import FS  # type: ignore
+
+            FS.syncfs(False, lambda err: None)
+        except Exception:
+            try:
+                import pyodide_js  # type: ignore
+
+                if hasattr(pyodide_js, "fs") and hasattr(pyodide_js.fs, "syncfs"):
+                    pyodide_js.fs.syncfs(False, lambda err: None)
+            except Exception:
+                pass
+    except Exception:
+        pass
 
 
 def _copiar_estructura():

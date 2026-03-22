@@ -1,0 +1,7 @@
+# Dependencias para ejecutar el juego en el navegador con pygbag.
+# Instalación: pip install -r requirements-pygbag.txt
+#
+# pygbag empaqueta Python + pygame-ce a WebAssembly. Usa pygame-ce, no pygame clásico.
+
+pygame-ce>=2.5.0
+pygbag>=0.9.0
