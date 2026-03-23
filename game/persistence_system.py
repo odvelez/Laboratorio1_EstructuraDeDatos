@@ -6,7 +6,7 @@ para proporcionar una API unificada de persistencia.
 """
 
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Optional
 from persistence.hash_table import HashTable
 from persistence.storage.record_store import RecordStore
 from persistence.storage.index_store import IndexStore
@@ -22,6 +22,7 @@ class PersistenceSystem:
 
     def __init__(self, data_dir: str = "."):
         self.data_dir = data_dir
+        os.makedirs(self.data_dir, exist_ok=True)
         self.data_file = os.path.join(data_dir, "data.log")
         self.index_file = os.path.join(data_dir, "index.bin")
 
@@ -50,7 +51,7 @@ class PersistenceSystem:
             self.index_store.save_index(ht)
             return ht
 
-    def save(self, key: str, data: Dict[str, Any], record_type: str = "data") -> bool:
+    def save(self, key: str, data: Any, record_type: str = "data") -> bool:
         """
         Guarda datos con una clave específica.
 
@@ -76,7 +77,7 @@ class PersistenceSystem:
             print(f"Error guardando datos: {e}")
             return False
 
-    def get(self, key: str) -> Optional[Dict[str, Any]]:
+    def get(self, key: str) -> Optional[Any]:
         """
         Obtiene datos por clave.
 
@@ -99,11 +100,12 @@ class PersistenceSystem:
             True si se eliminó correctamente
         """
         try:
-            # Eliminar del índice
-            if self.index.delete(key):
-                # Guardar índice actualizado
-                return self.index_store.save_index(self.index)
-            return False
+            if not self.index.contains(key):
+                return False
+
+            self.record_store.append_delete_record(key)
+            self.index.delete(key)
+            return self.index_store.save_index(self.index)
 
         except Exception as e:
             print(f"Error eliminando datos: {e}")
@@ -130,7 +132,7 @@ class PersistenceSystem:
         """
         return self.index.keys()
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> Any:
         """
         Obtiene estadísticas del sistema de persistencia.
 
@@ -164,3 +166,4 @@ class PersistenceSystem:
         self.record_store.clear_file()
         self.index_store.delete_index()
         self.index = HashTable()
+        self.index_store.save_index(self.index)
