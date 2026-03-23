@@ -1,5 +1,6 @@
 import pygame
 
+import audio_manager
 import config
 from crud import player
 
@@ -85,6 +86,7 @@ class SettingsScene:
             self.volume = (self.volume + 1) % 11
             if jugador is not None:
                 jugador.settings["volume"] = self.volume
+            audio_manager.set_volume_from_level(self.volume)
         elif option == "FULLSCREEN":
             if _is_fullscreen():
                 pygame.display.set_mode(WINDOWED_SIZE)

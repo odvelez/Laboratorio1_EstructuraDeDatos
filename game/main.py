@@ -15,6 +15,8 @@ sys.path.insert(0, _PROJECT_ROOT)
 
 import pygame
 
+import audio_manager
+from crud import player
 from scenes.login import LoginScene
 
 WINDOWED_SIZE = (800, 600)
@@ -26,6 +28,8 @@ async def main():
     screen = pygame.display.set_mode(WINDOWED_SIZE)
     pygame.display.set_caption("Laboratorio 1 - Escenas")
     clock = pygame.time.Clock()
+    audio_manager.load_and_play_music()
+    applied_volume = None
 
     current_scene = LoginScene()
     running = True
@@ -40,6 +44,14 @@ async def main():
                     screen = pygame.display.set_mode(WINDOWED_SIZE)
                 else:
                     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+        current_player = player.jugador_actual
+        target_volume = 5
+        if current_player is not None:
+            target_volume = current_player.settings.get("volume", 5)
+        if target_volume != applied_volume:
+            audio_manager.set_volume_from_level(target_volume)
+            applied_volume = target_volume
 
         current_scene.handle_events(events)
         current_scene.update()

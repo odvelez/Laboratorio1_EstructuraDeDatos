@@ -508,7 +508,7 @@
             }
         },
         "jesus": {
-            "maxScore": 2428,
+            "maxScore": 2776,
             "attempts": [
                 {
                     "score": 108,
@@ -524,6 +524,21 @@
                     "score": 2428,
                     "fecha": "2026-03-17 12:45:30",
                     "dificultad": "medio"
+                },
+                {
+                    "score": 758,
+                    "fecha": "2026-03-23 11:57:00",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 83,
+                    "fecha": "2026-03-23 11:57:03",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 2776,
+                    "fecha": "2026-03-23 12:00:36",
+                    "dificultad": "facil"
                 }
             ],
             "rankings": {
@@ -532,14 +547,19 @@
                     1168,
                     108
                 ],
-                "facil": [],
-                "dificil": []
+                "facil": [
+                    2776
+                ],
+                "dificil": [
+                    758,
+                    83
+                ]
             },
             "password": "a39ca0c052d72911",
             "settings": {
-                "difficulty": "medio",
-                "volume": 5,
-                "fullscreen": false
+                "difficulty": "facil",
+                "volume": 6,
+                "fullscreen": true
             }
         },
         "joel": {
