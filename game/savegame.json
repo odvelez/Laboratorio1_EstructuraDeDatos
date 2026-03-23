@@ -419,6 +419,51 @@
                     "score": 288,
                     "fecha": "2026-03-19 09:24:06",
                     "dificultad": "medio"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-22 20:15:33",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 135,
+                    "fecha": "2026-03-22 20:15:36",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-22 20:15:38",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 45,
+                    "fecha": "2026-03-22 20:15:39",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 165,
+                    "fecha": "2026-03-22 20:15:42",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 105,
+                    "fecha": "2026-03-22 20:15:44",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-22 20:15:45",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 30,
+                    "fecha": "2026-03-22 20:15:46",
+                    "dificultad": "dificil"
+                },
+                {
+                    "score": 195,
+                    "fecha": "2026-03-22 20:15:50",
+                    "dificultad": "dificil"
                 }
             ],
             "rankings": {
@@ -442,17 +487,17 @@
                     394,
                     228,
                     228,
+                    195,
                     180,
                     165,
                     165,
-                    153,
-                    138,
-                    138
+                    165,
+                    153
                 ]
             },
             "password": "4d4a95e42d6c8336",
             "settings": {
-                "difficulty": "medio",
+                "difficulty": "dificil",
                 "volume": 5,
                 "fullscreen": false
             }
