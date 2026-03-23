@@ -79,5 +79,4 @@ def migrate_savegame_to_persistence(savegame_file: str = "savegame.json"):
 
 
 if __name__ == "__main__":
-    migrate_savegame_to_persistence()</content>
-<parameter name="filePath">c:\Users\isaac\OneDrive\Documents\UNINORTE\III SEMESTRE\Estructura de datos\Laboratorio1_EstructuraDeDatos\migrate_data.py
+    migrate_savegame_to_persistence()
