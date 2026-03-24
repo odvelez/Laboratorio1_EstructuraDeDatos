@@ -12,14 +12,14 @@ import sys
 import os
 
 # Agregar el directorio game al path para importar módulos
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'game'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "game"))
 
 from persistence_system import PersistenceSystem
 
 
 def generate_random_string(length: int = 10) -> str:
     """Genera una cadena aleatoria."""
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    return "".join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
 def generate_test_data(count: int) -> list:
@@ -33,16 +33,16 @@ def generate_test_data(count: int) -> list:
                 {
                     "score": random.randint(0, 10000),
                     "fecha": f"2024-{random.randint(1,12):02d}-{random.randint(1,28):02d}",
-                    "dificultad": random.choice(["facil", "medio", "dificil"])
+                    "dificultad": random.choice(["facil", "medio", "dificil"]),
                 }
                 for _ in range(random.randint(1, 10))
             ],
             "rankings": {
                 "facil": [random.randint(0, 5000) for _ in range(random.randint(1, 5))],
                 "medio": [random.randint(0, 8000) for _ in range(random.randint(1, 5))],
-                "dificil": [random.randint(0, 10000) for _ in range(random.randint(1, 5))]
+                "dificil": [random.randint(0, 10000) for _ in range(random.randint(1, 5))],
             },
-            "password": generate_random_string(16)
+            "password": generate_random_string(16),
         }
         data.append((username, profile_data))
     return data
@@ -77,7 +77,7 @@ def run_performance_test(record_count: int) -> dict:
         persistence.save(key, profile_data, "profile")
 
     insert_time = time.time() - start_time
-    print(".2f")
+    print(f"Tiempo insercion: {insert_time:.4f} s")
 
     # Obtener estadísticas después de inserción
     stats_after_insert = persistence.get_stats()
@@ -85,7 +85,9 @@ def run_performance_test(record_count: int) -> dict:
 
     # Prueba de búsqueda
     print("Midiendo tiempo de búsqueda...")
-    search_keys = [f"profile:user_{random.randint(0, record_count-1)}" for _ in range(min(1000, record_count))]
+    search_keys = [
+        f"profile:user_{random.randint(0, record_count - 1)}" for _ in range(min(1000, record_count))
+    ]
 
     start_time = time.time()
     found_count = 0
@@ -96,11 +98,11 @@ def run_performance_test(record_count: int) -> dict:
 
     search_time = time.time() - start_time
     search_avg_time = search_time / len(search_keys)
-    print(".2f")
+    print(f"Tiempo busqueda ({len(search_keys)} consultas): {search_time:.4f} s")
+    print(f"  Promedio por busqueda: {search_avg_time:.6f} s")
     print(f"Registros encontrados: {found_count}/{len(search_keys)}")
 
     # Calcular colisiones (estimación basada en la estructura de la tabla)
-    # Para una estimación simple, podemos usar la información de la tabla hash
     ht = persistence.index
     total_buckets = ht.size
     occupied_buckets = sum(1 for i in range(ht.size) if ht.table[i] is not None)
@@ -141,7 +143,7 @@ def run_performance_test(record_count: int) -> dict:
             "chains_with_length_1": sum(1 for l in chain_lengths if l == 1),
             "chains_with_length_2": sum(1 for l in chain_lengths if l == 2),
             "chains_with_length_3_plus": sum(1 for l in chain_lengths if l >= 3),
-        }
+        },
     }
 
     return results
@@ -166,27 +168,35 @@ def run_all_tests():
 
     # Resumen final
     print("\n" + "=" * 50)
-    print("RESUMEN DE RESULTADOS")
+    print("RESUMEN DE RESULTADOS (diapositiva 9)")
     print("=" * 50)
-
-    print("<10")
-    print("-" * 70)
-    print("<10")
-    print("-" * 70)
+    header = (
+        f"{'N':>8} | {'Ins.(s)':>12} | {'Busq.(s)':>12} | {'Load':>8} | "
+        f"{'Cad.avg':>8} | {'Cad.max':>8}"
+    )
+    print(header)
+    print("-" * len(header))
 
     for result in all_results:
-        count = result["record_count"]
         insert_time = result["insert_time"]
         search_time = result["search_time"]
         load_factor = result["load_factor"]
         avg_chain = result["avg_chain_length"]
         max_chain = result["max_chain_length"]
+        count = result["record_count"]
+        print(
+            f"{count:8d} | {insert_time:12.4f} | {search_time:12.4f} | "
+            f"{load_factor:8.4f} | {avg_chain:8.4f} | {max_chain:8d}"
+        )
+        ci = result.get("collision_info", {})
+        print(
+            f"         Cadenas L=1: {ci.get('chains_with_length_1', 0)}, "
+            f"L=2: {ci.get('chains_with_length_2', 0)}, "
+            f"L>=3: {ci.get('chains_with_length_3_plus', 0)}"
+        )
 
-        print("<10")
-
-    print("\nPruebas completadas. Los archivos data.log e index.bin contienen los datos de prueba.")
+    print("\nPruebas completadas. data.log e index.bin en el directorio de trabajo.")
 
 
 if __name__ == "__main__":
-    run_all_tests()</content>
-<parameter name="filePath">c:\Users\isaac\OneDrive\Documents\UNINORTE\III SEMESTRE\Estructura de datos\Laboratorio1_EstructuraDeDatos\performance_tests.py
+    run_all_tests()
