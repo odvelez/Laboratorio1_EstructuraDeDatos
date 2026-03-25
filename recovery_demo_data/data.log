@@ -1,0 +1,3 @@
+["demo", "profile:demo_alice", [1200, [[1200, "2026-03-14", "facil"]], [[1200], [], []], "hash_a", ["facil", 5, 0]], 0]
+["demo", "profile:demo_bob", [980, [[980, "2026-03-14", "medio"]], [[], [980], []], "hash_b", ["medio", 7, 0]], 0]
+["demo", "settings:demo_alice", ["facil", 8, 1], 0]
