@@ -539,6 +539,16 @@
                     "score": 2776,
                     "fecha": "2026-03-23 12:00:36",
                     "dificultad": "facil"
+                },
+                {
+                    "score": 178,
+                    "fecha": "2026-03-25 10:04:29",
+                    "dificultad": "facil"
+                },
+                {
+                    "score": 980,
+                    "fecha": "2026-03-25 10:04:48",
+                    "dificultad": "facil"
                 }
             ],
             "rankings": {
@@ -548,7 +558,9 @@
                     108
                 ],
                 "facil": [
-                    2776
+                    2776,
+                    980,
+                    178
                 ],
                 "dificil": [
                     758,
@@ -810,6 +822,29 @@
                 ]
             },
             "password": "70fcf83eb2f02122",
+            "settings": {
+                "difficulty": "medio",
+                "volume": 5,
+                "fullscreen": false
+            }
+        },
+        "testuser": {
+            "maxScore": 250,
+            "attempts": [
+                {
+                    "score": 250,
+                    "fecha": "2026-03-25 09:58:06",
+                    "dificultad": "medio"
+                }
+            ],
+            "rankings": {
+                "medio": [
+                    250
+                ],
+                "facil": [],
+                "dificil": []
+            },
+            "password": "f28a93f617d3d646",
             "settings": {
                 "difficulty": "medio",
                 "volume": 5,

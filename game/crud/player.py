@@ -176,15 +176,42 @@ class PlayerManager:
         jugador_actual.registrar_intento(score, dificultad)
         self._guardar()
 
+        try:
+            from datetime import datetime
+            from backend import get_persistence
+            ps = get_persistence()
+            ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            score_data = {
+                "username": jugador_actual.nombre,
+                "score": score,
+                "difficulty": dificultad,
+                "timestamp": ts,
+            }
+            ps.save(f"score:{jugador_actual.nombre}:{dificultad}:{ts}", score_data, "score")
+        except Exception:
+            pass
+
     def get_jugador_actual(self):
         return jugador_actual
 
     def _guardar(self):
-        """Serializa el HashTable de jugadores a JSON."""
+        """Serializa el HashTable de jugadores a JSON y mirror-write a data.log."""
         players_out = {}
         for nombre, player_obj in self.players.items():
             players_out[nombre] = player_obj.to_dict()
         save_system.guardar_datos({"players": players_out})
+
+        try:
+            from backend import get_persistence
+            ps = get_persistence()
+            for nombre, player_obj in self.players.items():
+                data = player_obj.to_dict()
+                ps.save(f"profile:{nombre}", data, "profile")
+                settings = data.get("settings")
+                if settings:
+                    ps.save(f"settings:{nombre}", settings, "settings")
+        except Exception:
+            pass
 
 
 manager = None

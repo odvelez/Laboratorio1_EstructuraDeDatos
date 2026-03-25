@@ -16,6 +16,7 @@ sys.path.insert(0, _PROJECT_ROOT)
 import pygame
 
 import audio_manager
+import backend
 from crud import player
 from scenes.login import LoginScene
 
@@ -24,6 +25,8 @@ WINDOWED_SIZE = (800, 600)
 
 async def main():
     pygame.init()
+
+    backend.get_persistence()
 
     screen = pygame.display.set_mode(WINDOWED_SIZE)
     pygame.display.set_caption("Laboratorio 1 - Escenas")
